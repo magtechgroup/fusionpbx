@@ -513,6 +513,8 @@
 		$ring_group_call_timeout = '30';
 	}
 	if (strlen($ring_group_enabled) == 0) { $ring_group_enabled = 'true'; }
+	if (strlen($ring_group_call_forward_enabled) == 0) { $ring_group_call_forward_enabled = 'true'; }
+	if (strlen($ring_group_follow_me_enabled) == 0) { $ring_group_follow_me_enabled = 'true'; }
 
 //get the ring group destination array
 	if ($action == "add") {
