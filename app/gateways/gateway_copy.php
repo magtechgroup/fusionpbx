@@ -24,12 +24,8 @@
 	Mark J Crane <markjcrane@fusionpbx.com>
 */
 
-//set the include path
-	$conf = glob("{/usr/local/etc,/etc}/fusionpbx/config.conf", GLOB_BRACE);
-	set_include_path(parse_ini_file($conf[0])['document.root']);
-
 //includes files
-	require_once "resources/require.php";
+	require_once dirname(__DIR__, 2) . "/resources/require.php";
 	require_once "resources/check_auth.php";
 	require_once "resources/paging.php";
 
@@ -93,10 +89,10 @@
 			unset($sql, $parameters, $row);
 
 		//set defaults
-			if (strlen($expire_seconds) == 0) {
+			if (empty($expire_seconds)) {
 				$expire_seconds = '800';
 			}
-			if (strlen($retry_seconds) == 0) {
+			if (empty($retry_seconds)) {
 				$retry_seconds = '30';
 			}
 

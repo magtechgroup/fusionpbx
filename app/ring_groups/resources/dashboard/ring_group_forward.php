@@ -25,12 +25,8 @@
 	James Rose <james.o.rose@gmail.com>
 */
 
-//set the include path
-	$conf = glob("{/usr/local/etc,/etc}/fusionpbx/config.conf", GLOB_BRACE);
-	set_include_path(parse_ini_file($conf[0])['document.root']);
-
 //includes files
-	require_once "resources/require.php";
+	require_once  dirname(__DIR__, 4) . "/resources/require.php";
 
 //add multi-lingual support
 	$language = new text;
@@ -63,7 +59,7 @@
 	}
 
 //update ring group forwarding
-	if (is_array($_POST['ring_groups']) && @sizeof($_POST['ring_groups']) != 0 && permission_exists('ring_group_forward')) {
+	if (isset($_POST['ring_groups']) && is_array($_POST['ring_groups']) && @sizeof($_POST['ring_groups']) != 0 && permission_exists('ring_group_forward')) {
 
 		//validate the token
 			$token = new token;
@@ -130,16 +126,17 @@
 
 //determine keys and stats
 	unset($stats);
+
+//set defaults
+	$stats['forwarding'] = 0;
+	$stats['active'] = 0;
+
 	if (is_array($result) && @sizeof($result) != 0) {
 		foreach ($result as $row) {
 			$stats['forwarding'] += $row['ring_group_forward_enabled'] == 'true' && $row['ring_group_forward_destination'] ? 1 : 0;
 		}
 		$stats['active'] = @sizeof($result) - $stats['forwarding'];
 	}
-
-//set defaults
-	if ($stats['forwarding'] == null) { $stats['forwarding'] = 0; }
-	if ($stats['active'] == null) { $stats['active'] = 0; }
 
 //set the row style
 	$c = 0;
@@ -263,7 +260,7 @@
 
 	echo "</table>\n";
 	echo "</div>";
-	$n++;
+	//$n++;
 
 	echo "<input type='hidden' name='".$token['name']."' value='".$token['hash']."'>\n";
 	echo "</form>\n";

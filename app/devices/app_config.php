@@ -48,9 +48,13 @@
 		$apps[$x]['permissions'][$y]['groups'][] = "admin";
 		$apps[$x]['permissions'][$y]['groups'][] = "superadmin";
 		$y++;
-		$apps[$x]['permissions'][$y]['name'] = "device_mac_address";
+		$apps[$x]['permissions'][$y]['name'] = "device_address";
 		$apps[$x]['permissions'][$y]['groups'][] = "superadmin";
 		$apps[$x]['permissions'][$y]['groups'][] = "admin";
+		$y++;
+		$apps[$x]['permissions'][$y]['name'] = "device_address_uuid";
+		//$apps[$x]['permissions'][$y]['groups'][] = "superadmin";
+		//$apps[$x]['permissions'][$y]['groups'][] = "admin";
 		$y++;
 		$apps[$x]['permissions'][$y]['name'] = "device_label";
 		$apps[$x]['permissions'][$y]['groups'][] = "superadmin";
@@ -411,8 +415,8 @@
 		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = "";
 		$apps[$x]['db'][$y]['fields'][$z]['deprecated'] = "true";
 		$z++;
-		$apps[$x]['db'][$y]['fields'][$z]['name']['text'] = "device_mac_address";
-		$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'] = "phone_mac_address";
+		$apps[$x]['db'][$y]['fields'][$z]['name']['text'] = "device_address";
+		$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'] = "device_mac_address";
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = "text";
 		$apps[$x]['db'][$y]['fields'][$z]['search'] = 'true';
 		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = "";
@@ -1886,22 +1890,6 @@
 		$vendors[$y]['functions'][$z]['type'] = "null";
 		$vendors[$y]['functions'][$z]['subtype'] = "";
 		$vendors[$y]['functions'][$z]['value'] = "Null";
-		$vendors[$y]['functions'][$z]['groups'][] = "superadmin";
-		$vendors[$y]['functions'][$z]['groups'][] = "admin";
-		$z++;
-		$vendors[$y]['functions'][$z]['uuid'] = "75f4f5fa-f4e8-4680-ac6f-a69846708569";
-		$vendors[$y]['functions'][$z]['label'] = "label-speeddial";
-		$vendors[$y]['functions'][$z]['type'] = "speeddial";
-		$vendors[$y]['functions'][$z]['subtype'] = "";
-		$vendors[$y]['functions'][$z]['value'] = "SpeedDial";
-		$vendors[$y]['functions'][$z]['groups'][] = "superadmin";
-		$vendors[$y]['functions'][$z]['groups'][] = "admin";
-		$z++;
-		$vendors[$y]['functions'][$z]['uuid'] = "ab4cf4e2-6e10-485a-964d-f66f7cfd2c85";
-		$vendors[$y]['functions'][$z]['label'] = "label-speeddialmenu";
-		$vendors[$y]['functions'][$z]['type'] = "speeddialmenu";
-		$vendors[$y]['functions'][$z]['subtype'] = "";
-		$vendors[$y]['functions'][$z]['value'] = "SpeedDialMenu";
 		$vendors[$y]['functions'][$z]['groups'][] = "superadmin";
 		$vendors[$y]['functions'][$z]['groups'][] = "admin";
 		$z++;
@@ -4194,5 +4182,11 @@
 		$vendors[$y]['functions'][$z]['description'] = "BLF/DTMF";
 		$vendors[$y]['functions'][$z]['groups'][] = "superadmin";
 		$vendors[$y]['functions'][$z]['groups'][] = "admin";
+
+	//linphone details
+		$y++;
+		$vendors[$y]['uuid'] = "782bc1cc-149f-406f-b8e2-24a2bc484fad";
+		$vendors[$y]['name'] = "linphone";
+		$z=0;
 
 ?>

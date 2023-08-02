@@ -27,12 +27,8 @@
 	POSSIBILITY OF SUCH DAMAGE.
 */
 
-//set the include path
-	$conf = glob("{/usr/local/etc,/etc}/fusionpbx/config.conf", GLOB_BRACE);
-	set_include_path(parse_ini_file($conf[0])['document.root']);
-
 //includes files
-	require_once "resources/require.php";
+	require_once dirname(__DIR__, 2) . "/resources/require.php";
 	require_once "resources/check_auth.php";
 
 //check permissions
@@ -136,7 +132,7 @@
 		}
 
 		//fs cmd
-		if (strlen($switch_cmd) > 0) {
+		if (!empty($switch_cmd)) {
 			//setup the event socket connection
 				$fp = event_socket_create($_SESSION['event_socket_ip_address'], $_SESSION['event_socket_port'], $_SESSION['event_socket_password']);
 			//ensure the connection exists

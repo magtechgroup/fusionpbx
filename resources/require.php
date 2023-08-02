@@ -29,21 +29,46 @@
 	$conf = parse_ini_file($config_glob[0]);
 	set_include_path($conf['document.root']);
 
+//config file
+	$config_file = $config_glob[0] ?? '';
+
+//check if the config file exists
+	$config_exists = file_exists($config_file) ? true : false;
+
 //set the server variables and define project path constant
 	$_SERVER["DOCUMENT_ROOT"] = $conf['document.root'];
+	$_SERVER["PROJECT_ROOT"] = $conf['document.root'];
 	$_SERVER["PROJECT_PATH"]  = $conf['project.path'];
 	if (isset($conf['project.path'])) {
-		$_SERVER["PROJECT_ROOT"] = $conf['document.root'].$conf['project.path'];
+		$_SERVER["PROJECT_ROOT"] = $conf['document.root'].'/'.$conf['project.path'];
+		if (!defined('PROJECT_ROOT')) { define("PROJECT_ROOT", $conf['document.root'].'/'.$conf['project.path']); }
+		if (!defined('PROJECT_PATH')) { define("PROJECT_PATH", $conf['project.path']); }
 	}
 	else {
-		$_SERVER["PROJECT_ROOT"] = $conf['document.root'];
+		if (!defined('PROJECT_ROOT')) { define("PROJECT_ROOT", $conf['document.root']); }
+		if (!defined('PROJECT_PATH')) { define("PROJECT_PATH", ''); }
 	}
-	define("PROJECT_PATH", $conf['project.path']);
 
 //set the error reporting
+	ini_set('display_errors', '1');
 	if (isset($conf['error.reporting'])) {
-		ini_set('display_errors', '1');
-		error_reporting($conf['error.reporting']);
+		$error_reporting_scope = $conf['error.reporting'];
+	}
+	else {
+		$error_reporting_scope = 'user';
+	}
+	switch ($error_reporting_scope) {
+	case 'user':
+		error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING ^ E_DEPRECATED);
+		break;
+	case 'dev':
+		error_reporting(E_ALL ^ E_NOTICE);
+		break;
+	case 'all':
+		error_reporting(E_ALL);
+		break;
+	default:
+		error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING ^ E_DEPRECATED);
 	}
 
 //get the database connection settings
@@ -77,7 +102,7 @@
 	require_once "resources/php.php";
 	require_once "resources/functions.php";
 	if (is_array($conf) && count($conf) > 0) {
-		require "resources/pdo.php";
+		require_once "resources/pdo.php";
 		require_once "resources/cidr.php";
 		if (file_exists($_SERVER["DOCUMENT_ROOT"] . PROJECT_PATH . "/resources/switch.php")) {
 			require_once "resources/switch.php";

@@ -1,7 +1,7 @@
 <?php
 
-//includes
-	require_once "resources/require.php";
+//includes files
+	require_once dirname(__DIR__, 4) . "/resources/require.php";
 
 //check permisions
 	require_once "resources/check_auth.php";
@@ -472,7 +472,7 @@
 
 	echo "</table>\n";
 	echo "</div>";
-	$n++;
+	//$n++;
 
 	echo "<span class='hud_expander' onclick=\"$('#hud_system_counts_details').slideToggle('fast');\"><span class='fas fa-ellipsis-h'></span></span>\n";
 	echo "</div>\n";
