@@ -6,6 +6,10 @@ secure/mailto.bat
 secure/*.db
 secure/*.sqlite
 .DS_Store
+app/applications
+app/replication
+themes/thepbxnet
+app/fax/resources/images/*/
 
 *.php~
 
