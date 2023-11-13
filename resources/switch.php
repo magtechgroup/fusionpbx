@@ -376,9 +376,6 @@ function save_var_xml() {
 				if ($row['var_category'] != 'Provision') {
 					if ($prev_var_category != $row['var_category']) {
 						$xml .= "\n<!-- ".$row['var_category']." -->\n";
-						if (!empty($row["var_description"])) {
-							$xml .= "<!-- ".base64_decode($row['var_description'])." -->\n";
-						}
 					}
 					if (empty($row['var_command'])) { $row['var_command'] = 'set'; }
 					if ($row['var_category'] == 'Exec-Set') { $row['var_command'] = 'exec-set'; }
@@ -443,6 +440,7 @@ function outbound_route_to_bridge($domain_uuid, $destination_number, array $chan
 	$sql .= "and (hostname = :hostname or hostname is null) ";
 	$sql .= "and d.app_uuid = '8c914ec3-9fc0-8ab5-4cda-6c9288bdc9a3' ";
 	$sql .= "and d.dialplan_enabled = 'true' ";
+	$sql .= "and (dd.dialplan_detail_enabled = 'true' or dd.dialplan_detail_enabled is null) ";
 	$sql .= "order by d.domain_uuid,  d.dialplan_order, dd.dialplan_detail_order ";
 	$parameters['hostname'] = $hostname;
 	$database = new database;
@@ -459,7 +457,7 @@ function outbound_route_to_bridge($domain_uuid, $destination_number, array $chan
 			$outbound_routes[$dialplan_uuid]["dialplan_continue"] = $row["dialplan_continue"];
 		}
 	}
-	
+
 	if (!empty($outbound_routes)) {
 		$x = 0;
 		foreach ($outbound_routes as &$dialplan) {
@@ -493,7 +491,7 @@ function outbound_route_to_bridge($domain_uuid, $destination_number, array $chan
 					}
 				}
 			}
-		
+
 			if (!in_array('false', $condition_match)) {
 				foreach ($dialplan as &$dialplan_details) {
 					$dialplan_detail_data = $dialplan_details['dialplan_detail_data'] ?? '';
@@ -513,8 +511,8 @@ function outbound_route_to_bridge($domain_uuid, $destination_number, array $chan
 						$x++;
 					}
 				}
-				
-				if ($dialplan["dialplan_continue"] == "false") {
+
+				if (!empty($bridge_array) && $dialplan["dialplan_continue"] == "false") {
 					break;
 				}
 			}
