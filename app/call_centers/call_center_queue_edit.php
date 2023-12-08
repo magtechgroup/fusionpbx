@@ -385,6 +385,7 @@
 			if (!empty($queue_cc_exit_keys)) {
 				$dialplan_xml .= "		<action application=\"set\" data=\"cc_exit_keys=".xml::sanitize($queue_cc_exit_keys)."\"/>\n";
 			}
+			$dialplan_xml .= "        <action application=\"set\" data=\"result=\${luarun(magtech/callcenter-announce-position.lua \${uuid} ".xml::sanitize($queue_extension)."@".$_SESSION['domain_name']." 15000)}\"/>\n";
 			$dialplan_xml .= "		<action application=\"callcenter\" data=\"".xml::sanitize($queue_extension)."@".$_SESSION["domain_name"]."\"/>\n";
 			if ($destination->valid($queue_timeout_app.':'.$queue_timeout_data)) {
 				$dialplan_xml .= "		<action application=\"".xml::sanitize($queue_timeout_app)."\" data=\"".xml::sanitize($queue_timeout_data)."\"/>\n";
