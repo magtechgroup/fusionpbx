@@ -1218,6 +1218,7 @@ function number_pad($number,$n) {
 				if (substr_count($color, 'rgb') != 0) {
 					$color = str_replace('rgb', '', $color);
 					$color = str_replace('a(', '', $color);
+					$color = str_replace('(', '', $color);
 					$color = str_replace(')', '', $color);
 					$wrapper = true;
 				}

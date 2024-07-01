@@ -42,8 +42,19 @@
 //define variables
 	if (!isset($_SESSION['template_content'])) { $_SESSION["template_content"] = null; }
 
+//if session authorized is not set then set the default value to false
+	if (!isset($_SESSION['authorized'])) {
+		$_SESSION['authorized'] = false;
+	}
+
+//validate the session address
+	if ($_SESSION['authorized'] && $_SESSION["user_hash"] !== hash('sha256', $_SERVER['HTTP_USER_AGENT'])) {
+		session_destroy();
+		header("Location: ".PROJECT_PATH."/logout.php");
+	}
+
 //if the session is not authorized then verify the identity
-	if (!isset($_SESSION['authorized']) || (isset($_SESSION['authorized']) && !$_SESSION['authorized'])) {
+	if (!$_SESSION['authorized']) {
 
 		//clear the menu
 			unset($_SESSION["menu"]);

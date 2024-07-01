@@ -68,6 +68,7 @@
 				}
 			}
 			$sql .= "
+   			and hangup_cause <> 'LOSE_RACE' 
 			and start_epoch > ".(time() - 86400)."
 		order by
 			start_epoch desc";

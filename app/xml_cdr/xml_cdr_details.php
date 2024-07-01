@@ -162,7 +162,7 @@
 			if ($x == 0) {
 				$destination_number = urldecode($row["caller_profile"]["destination_number"]);
 				$context = urldecode($row["caller_profile"]["context"]);
-				$network_addr = urldecode($row["caller_profile"]["network_addr"]);
+				$network_addr = urldecode((string)$row["caller_profile"]["network_addr"]);
 			}
 			$caller_id_name = urldecode($row["caller_profile"]["caller_id_name"]);
 			$caller_id_number = urldecode($row["caller_profile"]["caller_id_number"]);
